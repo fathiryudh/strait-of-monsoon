@@ -65,6 +65,26 @@ Change map: `riau/change_2026-07-03_2026-10-19.png` (2026-07-03 to 2026-10-19, b
 
 Polygons: `peat_forest` Intact peat swamp forest (GSK-BB core); `loss_block` Plantation block, HV loss (clearing or burn); `loss_river` Riverside patches, HV loss; `regrowth` Plantation block, HV gain (regrowth).
 
+**tonle_sap** bounds `[103.30, 12.35, 104.05, 13.35]` [w,s,e,n]. Tonle Sap lake, Cambodia: open-water area per pass. Stack `076_D_082` (track 76, descending, frame 82), full frames only (`..._N_F_J_001`; the `N_P` partial frames are skipped). The frame footprint is a tilted quad whose east edge runs from lon 103.69 at 12.35N to 103.94 at 13.35N, so only the **western part of the lake is covered** (valid=68% of the AOI; the rest stays transparent). water_km2 is for the covered part only. HH only (20 m posting x 4 = 80 m pixels, so the blob filter is 13 px = 8 ha). Dates: 2026-06-19, 07-01, 07-13, 07-25, 08-18, 08-30, 09-11, 09-23, 10-05, 10-17 (PROVISIONAL), 10-29 (VALIDATED). Granule IDs: `uv run python run.py render tonle_sap` / manifest `scenes[].granule`.
+
+Water method: HH dB below a fixed **-17.0 dB** on every date (`LAKE_DB`), 3x3 median, drop blobs under 13 px (8 ha), drawn as `water_<date>.png` (#3B82F6 at 70%). Otsu was tried first: it gave -10.5 dB (land/water split, flags dark paddy and fallow fields as water), and -20 dB missed the lake itself (June lake median is -18 dB, wind and range falloff), so fixed -17 was kept. Area = pixel count x per-row cell area (cos(lat), spherical R=6371 km). `stats` row per date: `poly_id` `lake`, `mean_hv_db` holds the **mean HH dB over the AOI** (column is NOT NULL; no HV is fetched for this AOI), new nullable `water_km2`. Run `alter table stats add column if not exists water_km2 real;` once in the Supabase SQL editor (upload falls back to stats without it and says so).
+
+| date | water_km2 |
+|---|---|
+| 2026-06-19 | 323 |
+| 2026-07-01 | 375 |
+| 2026-07-13 | 351 |
+| 2026-07-25 | 358 |
+| 2026-08-18 | 418 |
+| 2026-08-30 | 498 |
+| 2026-09-11 | 551 |
+| 2026-09-23 | 743 |
+| 2026-10-05 | 1144 |
+| 2026-10-17 | 1239 |
+| 2026-10-29 | 965 |
+
+Caveats: wind-roughened water and flooded forest/vegetation are missed by a simple threshold, so km2 is a lower bound of open water. Flooded paddy and floodplain fields count as water in Sep-Oct (that is most of the growth beyond the lake itself), and some dark land (paddy, burn, fallow) can be flagged on any date; June has a few small false patches west of the lake. 10-29 is VALIDATED, the rest PROVISIONAL, so part of the 10-17 to 10-29 drop may be calibration. The fixed threshold was set by eye from one June and one October mask.
+
 ## Caveats
 - Calibration: 2026-10-21 onward is VALIDATED (`NISAR_L2_GCOV_V1`); earlier is PROVISIONAL (`NISAR_L2_GCOV_PROVISIONAL_V1`). ASF warns mixing maturities introduces processing differences, so change maps compare two PROVISIONAL dates only. VALIDATED frames are in the time-lapse and stats, but a step in the chart at 10-24 may be calibration, not ground change.
 - 2026-07-27..08-10 is a permanent PROVISIONAL data gap (no 08-01 scene).
