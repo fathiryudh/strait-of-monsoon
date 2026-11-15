@@ -21,7 +21,7 @@ from matplotlib import colormaps
 from matplotlib.path import Path as MPath
 from PIL import Image
 from pyproj import Transformer
-from scipy.ndimage import label, uniform_filter
+from scipy.ndimage import label, median_filter, uniform_filter
 
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "out"
@@ -33,9 +33,23 @@ RANGES = {"hv": (-30.0, -5.0), "hh": (-25.0, 0.0)}  # dB stretch per polarizatio
 POLS = {"hv": "HVHV", "hh": "HHHH"}
 CHANGE_MAX, CHANGE_MIN = 6.0, 3.0
 WATER_DB = -21.0  # median HV over all dates below this = open water, masked in change maps
+LAKE_DB = -17.0  # tonle_sap fixed HH threshold: Otsu gave -10.5 (flags dark paddy), -20 misses the lake (June lake median -18 dB)
+WATER_RGBA = (0x3B, 0x82, 0xF6, 179)  # #3B82F6 at 70%
+LAKE_MIN_PX = 13  # 8 ha at this AOI's 80 m pixels (20 m posting x 4)
 MIN_BLOB_PX = 50  # drop change blobs under 50 px (8 ha at 40 m): mostly ships moving between anchorage slots
 
 AOIS = {
+    "tonle_sap": dict(
+        # Tonle Sap: west ~2/3 of the lake only. Frame 076_D_082 footprint edge runs from (103.49,11.55) to (104.02,13.69),
+        # so the east part of the AOI is outside it and stays transparent/NaN.
+        bounds=[103.30, 12.35, 104.05, 13.35],
+        stack=dict(relativeOrbit=76, frame=82, flightDirection="DESCENDING"),
+        dates=("2026-06-19", "2026-10-29"),
+        pick=("2026-06-19", "2026-07-01", "2026-07-13", "2026-07-25", "2026-08-18", "2026-08-30", "2026-09-11",
+              "2026-09-23", "2026-10-05", "2026-10-17", "2026-10-29"),
+        water=True,
+        polys={},
+    ),
     "sg_reclaim": dict(
         bounds=[103.55, 1.15, 104.10, 1.65],
         stack=dict(relativeOrbit=11, frame=2, flightDirection="ASCENDING"),
@@ -77,6 +91,8 @@ def search(aoi):
             date = g.properties["startTime"][:10]
             h5 = [u for u in g.find_urls(extension=".h5") if "QA_STATS" not in u]
             prev = out.get(date)
+            if a.get("water") and "_F_J_001" not in g.properties["sceneName"]:  # skip partial (N_P) frames
+                continue
             if h5 and (prev is None or g.properties["sceneName"] > prev["granule"]):  # keep latest product counter
                 out[date] = dict(date=date, maturity=maturity, granule=g.properties["sceneName"], url=h5[0])
     picked = [out[d] for d in sorted(out) if "pick" not in a or d in a["pick"]]
@@ -234,6 +250,56 @@ def poly_mean_db(lin, lon, lat, ring):
     return float(db(vals.mean())) if vals.size else None  # mean in linear power, then dB
 
 
+def water_mask(lin):
+    """Open water = HH dB below LAKE_DB, 3x3 median + blobs < 8 ha dropped."""
+    d = db(lin)
+    thr = LAKE_DB
+    m = median_filter(np.nan_to_num(d, nan=0.0) < thr, size=3) & np.isfinite(d)
+    lab, _ = label(m)
+    small = np.bincount(lab.ravel()) < LAKE_MIN_PX
+    small[0] = False
+    return m & ~small[lab], thr
+
+
+def process_lake(aoi, grans):
+    a = AOIS[aoi]
+    bounds = a["bounds"]
+    w, s, e, n = bounds
+    scenes, stats = [], []
+    for gr in grans:
+        try:
+            npy = CACHE / aoi / f"hh_{gr['date']}.npy"
+            if npy.exists():
+                lin = np.load(npy)
+            else:
+                raw, x, y, epsg = read_clip(gr["url"], bounds, "HHHH")
+                lin, _, _ = to_latlon(*multilook(raw, x, y), epsg, bounds)
+                np.save(npy, lin)
+        except Exception as ex:  # fallback ladder: ship the dates that work
+            print(f"[{aoi}] {gr['date']} FAILED: {ex!r}", flush=True)
+            continue
+        H, W = lin.shape
+        lat = n - (np.arange(H) + 0.5) * (n - s) / H
+        km = 111.195  # km per degree (spherical)
+        px_km2 = ((e - w) / W * km) * ((n - s) / H * km) * np.cos(np.radians(lat))[:, None]
+        m, thr = water_mask(lin)
+        km2 = float((m * px_km2).sum())
+        gray_png(lin, OUT / aoi / f"hh_{gr['date']}.png", RANGES["hh"])
+        rgba = np.zeros((H, W, 4), np.uint8)
+        rgba[m] = WATER_RGBA
+        save_rgba(rgba, OUT / aoi / f"water_{gr['date']}.png")
+        for kind in ("hh", "water"):
+            scenes.append(dict(aoi=aoi, date=gr["date"], date_from=None, kind=kind, png_url=f"{aoi}/{kind}_{gr['date']}.png",
+                               bounds=bounds, maturity=gr["maturity"], granule=gr["granule"]))
+        mean_hh = float(db(np.nanmean(lin)))
+        stats.append(dict(aoi=aoi, poly_id="lake", poly_name="Tonle Sap open water", date=gr["date"],
+                          mean_hv_db=round(mean_hh, 2), water_km2=round(km2, 1)))  # mean_hv_db holds HH for this AOI
+        print(f"[{aoi}] {gr['date']} {gr['maturity']} thr={thr:.1f} dB water={km2:.0f} km2 meanHH={mean_hh:.1f} valid={np.isfinite(lin).mean():.0%}", flush=True)
+    assert len(stats) >= 3, "fewer than 3 dates succeeded"
+    ring = [(w, s), (e, s), (e, n), (w, n)]
+    return scenes, stats, [dict(aoi=aoi, poly_id="lake", poly_name="Tonle Sap open water", ring=ring)]
+
+
 def process(aoi):
     a = AOIS[aoi]
     bounds = a["bounds"]
@@ -242,6 +308,8 @@ def process(aoi):
     t = time.time()
     grans = search(aoi)
     print(f"[{aoi}] {len(grans)} granules ({time.time() - t:.0f}s search)", flush=True)
+    if a.get("water"):
+        return process_lake(aoi, grans)
     scenes, stats, grids = [], [], {"hv": {}, "hh": {}}
     w, s, e, n = bounds
     for gr in grans:
@@ -331,7 +399,15 @@ def upload():
         for aoi in {r["aoi"] for r in rows}:  # scenes has no natural key: replace per AOI to stay idempotent
             sb.table("scenes").delete().eq("aoi", aoi).execute()
         sb.table("scenes").insert(rows).execute()
-        sb.table("stats").upsert(man["stats"], on_conflict="aoi,poly_id,date").execute()
+        try:
+            sb.table("stats").upsert(man["stats"], on_conflict="aoi,poly_id,date").execute()
+        except Exception as e:
+            if "water_km2" not in str(e):
+                raise
+            print("WARNING: stats.water_km2 column missing; uploaded stats WITHOUT it. Run in the Supabase SQL editor: "
+                  "alter table stats add column if not exists water_km2 real;  then rerun upload.")
+            sb.table("stats").upsert([{k: v for k, v in r.items() if k != "water_km2"} for r in man["stats"]],
+                                     on_conflict="aoi,poly_id,date").execute()
     except Exception as e:
         sys.exit(f"PNGs uploaded, but table write failed ({getattr(e, 'message', e)}). "
                  "Run pipeline/schema.sql in the Supabase SQL editor, then rerun `uv run python run.py upload`.")
