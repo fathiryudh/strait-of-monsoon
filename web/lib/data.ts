@@ -4,21 +4,21 @@ export type Scene = {
   aoi: string;
   date: string;
   date_from?: string | null;
-  kind: "hv" | "change";
+  kind: "hv" | "hh" | "change" | "change_hh";
   png_url: string;
   bounds: [number, number, number, number];
   maturity?: string | null;
 };
-export type Stat = { aoi: string; poly_id: string; poly_name: string; date: string; mean_hv_db: number };
+export type Stat = { aoi: string; poly_id: string; poly_name: string; date: string; mean_hv_db: number; mean_hh_db?: number | null };
 export type Overlays = { scenes: Scene[]; stats: Stat[] };
 
 export const SG_DATES = [
   "2026-07-08", "2026-07-20", "2026-08-13", "2026-08-25", "2026-09-06",
   "2026-09-18", "2026-09-30", "2026-10-12", "2026-10-24", "2026-11-05",
 ];
-// NISAR passes over Riau (a different track from Singapore), probed against GIBS tile coverage.
-export const RIAU_DATES = ["2026-08-20","2026-08-23","2026-09-01","2026-09-04","2026-09-13","2026-09-16","2026-09-25","2026-09-28","2026-10-07","2026-10-10"];
-export const RIAU_BOUNDS: [number, number, number, number] = [101.5, 0.8, 102.5, 1.6];
+// NISAR passes over Riau (a different track from Singapore), from the pipeline manifest.
+export const RIAU_DATES = ["2026-07-03","2026-07-15","2026-08-20","2026-09-01","2026-09-13","2026-09-25","2026-10-07","2026-10-19","2026-10-31"];
+export const RIAU_BOUNDS: [number, number, number, number] = [101.7, 1.0, 102.2, 1.5];
 export const SG_BOUNDS: [number, number, number, number] = [103.55, 1.15, 104.1, 1.65];
 export const DATE_MIN = "2025-10-29";
 export const DATE_MAX = "2026-11-13";
@@ -33,6 +33,8 @@ export const tiles = {
 };
 // GIBS NISAR tiles above z9 currently come back as striped placeholders, so overzoom z9.
 export const maxzoom = { nisar: 9, modis: 9, fires: 14 };
+// GPW population density 2020 (static, GoogleMapsCompatible_Level7 only).
+export const POP_TILES = `${GIBS}/GPW_Population_Density_2020/default/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png`;
 
 const abs = (u: string) => (/^(https?:)?\//.test(u) ? u : `/overlays/${u}`);
 
