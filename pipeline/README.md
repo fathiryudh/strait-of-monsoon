@@ -18,13 +18,14 @@ uv run python run.py selftest        # offline check of the HDF5 chunk decoder
 
 ## Method
 1. `asf_search`: `dataset=NISAR, processingLevel=GCOV, productionConfiguration=PR`, one repeat stack per AOI, PROVISIONAL + VALIDATED.
-2. Stream only the AOI: resolve the EDL redirect once to the presigned CloudFront URL, read the HDF5 chunk index with h5py, then fetch just the covering 512x512 chunks of `/science/LSAR/GCOV/grids/frequencyA/HVHV` (10 m) with 16 parallel HTTP range requests and decode them (byte shuffle + deflate) in numpy. About 100 MB per date instead of a 4.5 GB granule. (h5py straight over fsspec was 84 s for 16 chunks; too slow.)
+2. Stream only the AOI: resolve the EDL redirect once to the presigned CloudFront URL, read the HDF5 chunk index with h5py, then fetch just the covering 512x512 chunks of `/science/LSAR/GCOV/grids/frequencyA/HVHV` and `HHHH` (10 m) with 16 parallel HTTP range requests and decode them (byte shuffle + deflate) in numpy. About 100 MB per polarization per date instead of a 4.5 GB granule. (h5py straight over fsspec was 84 s for 16 chunks; too slow.)
 3. 4x4 multilook in linear power (10 m to 40 m), nearest-neighbour resample from UTM (EPSG:32648) onto a regular EPSG:4326 grid that exactly spans the AOI bounds.
 4. Outputs in `out/<aoi>/`:
    - `hv_<date>.png`: HV gamma0 in dB, grayscale, -30 (black) .. -5 dB (white), transparent nodata.
-   - `change_<from>_<to>.png`: dHV = HV(to) - HV(from) in dB after a 3x3 mean (linear) to suppress speckle. RdBu diverging, -6 (red, HV loss) .. +6 dB (blue, HV gain); transparent where |dHV| < 3 dB, where the median HV over all dates is below -21 dB (open water), and for change blobs under 50 px (8 ha). The last two hide ships moving between anchorage slots, which otherwise dominate the Singapore map.
-   - stats: mean HV per hand-drawn polygon per date (mean of linear power, then dB). Polygons are in `run.py` `AOIS[...]["polys"]` and in `manifest.json` `polys`.
-5. `out/manifest.json`: `{scenes: [...], stats: [...], polys: [...]}`. `scenes` rows match the `scenes` table (plus `granule`), with `png_url` relative to `out/` (e.g. `sg_reclaim/hv_2026-07-08.png`); `upload` swaps in the public Storage URL.
+   - `hh_<date>.png`: HH gamma0 in dB, same grid and grayscale, -25 .. 0 dB.
+   - `change_<from>_<to>.png` (HV) and `change_hh_<from>_<to>.png` (HH, same rules): dHV = HV(to) - HV(from) in dB after a 3x3 mean (linear) to suppress speckle. RdBu diverging, -6 (red, HV loss) .. +6 dB (blue, HV gain); transparent where |dHV| < 3 dB, where the median HV over all dates is below -21 dB (open water), and for change blobs under 50 px (8 ha). The last two hide ships moving between anchorage slots, which otherwise dominate the Singapore map.
+   - stats: `mean_hv_db` and `mean_hh_db` per hand-drawn polygon per date (mean of linear power, then dB). Polygons are in `run.py` `AOIS[...]["polys"]` and in `manifest.json` `polys`.
+5. `out/manifest.json`: `{scenes: [...], stats: [...], polys: [...]}`. `scenes` rows match the `scenes` table (plus `granule`); `kind` is `hv`, `hh`, `change` (HV) or `change_hh`, with `png_url` relative to `out/` (e.g. `sg_reclaim/hv_2026-07-08.png`); `upload` swaps in the public Storage URL.
 
 ## AOIs and granules
 **sg_reclaim** bounds `[103.55, 1.15, 104.1, 1.65]` [w,s,e,n]. Singapore, Tuas, Pulau Tekong, Johor Strait. Stack `011_A_002` (track 11, ascending, frame 2), checked inside both PROVISIONAL and VALIDATED footprints.
@@ -69,7 +70,10 @@ Polygons: `peat_forest` Intact peat swamp forest (GSK-BB core); `loss_block` Pla
 - 2026-07-27..08-10 is a permanent PROVISIONAL data gap (no 08-01 scene).
 - Change maps are one pair (first vs last PROVISIONAL date). Changes under 8 ha and anything on open water are hidden by design; a few large ships still pass. Soil moisture and rain also move HV by 1-2 dB.
 - Findings: Riau `loss_block` falls steadily -12.0 to -17.2 dB from Jul to Oct (gradual clearing/harvest, not a single-date event), `regrowth` rises -15.8 to -12.6 dB, intact peat forest stays at about -10.1 dB. Singapore polygons are flat within ±0.6 dB over 4 months; the visible change there is land clearing in Johor/Pasir Gudang and work inside the Tekong polder. VALIDATED vs PROVISIONAL shows no obvious step in these polygons (<0.4 dB).
+- Which polarization shows the change (from the PNGs and polygon stats, first vs last PROVISIONAL date):
+  - riau: **HV, clearly.** HV flags the harvested/cleared plantation blocks and the regrowth blocks, but HH barely flags them (`loss_block` HV -5.1 dB vs HH -1.7 dB; `regrowth` HV +3.2 vs HH +1.8). Only the riverside patches show up about equally in both. Volume scattering from canopy drives HV; HH mixes in surface and trunk-ground returns that change less when the canopy goes.
+  - sg_reclaim: **HV for vegetation clearing** (the Johor/Pasir Gudang patches are stronger in HV). **HH adds the construction at Changi East** (double-bounce from structures), but brings more sea streaks and ship-wake artifacts. Polygon means move under 1.2 dB in either polarization.
 - Polygons were placed by eye on the rendered HV images, not from official boundaries.
 - Riau AOI is a known peat-fire landscape (Giam Siak Kecil-Bukit Batu, Bengkalis/Siak); 2026 hotspots were not cross-checked against FIRMS.
-- Nearest-neighbour resample; GCOV is already RTC-corrected. HH was not fetched (HV only, to halve download).
-- Timing on a Singapore home connection: ~45 s per date (about 100 MB of chunks), 19 dates ~15 min; renders from cache in seconds.
+- Nearest-neighbour resample; GCOV is already RTC-corrected. The open-water mask for both change maps comes from the HV median.
+- Timing on a Singapore home connection: ~45 s per polarization per date (about 100 MB of chunks); renders from cache in seconds.
