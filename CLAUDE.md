@@ -1,4 +1,4 @@
-# Through the Haze
+# Strait of Monsoon
 NASA Space Apps 2026 "Dancing with the SARs". Next.js (web/) + offline Python pipeline (pipeline/) + Supabase.
 
 ## Commands
