@@ -183,7 +183,7 @@ export default function App() {
   const km = (v: number | null | undefined) => (Math.round((v ?? 0) / 10) * 10).toLocaleString("en");
   const part = (d: string) => { const n = +d.slice(8); return n <= 10 ? "early" : n <= 20 ? "mid" : "late"; };
   const waterNote = step?.waterNote && lake.length && peak
-    ? ` In these images it grew from about ${km(lake[0].water_km2)} km² in ${month(lake[0].date)} to about ${km(peak.water_km2)} km² in ${part(peak.date)} ${month(peak.date)}, almost ${Math.ceil((peak.water_km2 ?? 0) / (lake[0].water_km2 || 1))} times bigger.`
+    ? ` In the western two-thirds of the lake covered by these images, water grew from about ${km(lake[0].water_km2)} km² in ${month(lake[0].date)} to about ${km(peak.water_km2)} km² in ${part(peak.date)} ${month(peak.date)}, almost ${Math.ceil((peak.water_km2 ?? 0) / (lake[0].water_km2 || 1))} times bigger.`
     : "";
 
   return (

@@ -135,7 +135,7 @@ const BASE: Step[] = [
   {
     id: "play-lake",
     title: "Press play",
-    body: "Each frame is one NISAR pass, 12 days apart, from June to October. During the monsoon the Mekong River gets so full that it pushes water backwards up a river and into the lake, and the lake grows several times bigger.",
+    body: "Each frame is an available NISAR pass from June to October. NISAR revisits every 12 days, though some images are missing. During the monsoon the Mekong River gets so full that it pushes water backwards up a river and into the lake, and the lake grows several times bigger.",
     tryIt: "Press play",
     act: "play",
     check: "Watch the dark water spread",
