@@ -17,10 +17,40 @@
   },
   {
    "aoi": "sg_reclaim",
+   "date": "2026-07-08",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "sg_reclaim/hh_2026-07-08.png",
+   "bounds": [
+    103.55,
+    1.15,
+    104.1,
+    1.65
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_025_011_A_002_4005_DHDH_A_20260708T224134_20260708T224209_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "sg_reclaim",
    "date": "2026-07-20",
    "date_from": null,
    "kind": "hv",
    "png_url": "sg_reclaim/hv_2026-07-20.png",
+   "bounds": [
+    103.55,
+    1.15,
+    104.1,
+    1.65
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_026_011_A_002_4005_DHDH_A_20260720T224134_20260720T224208_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "sg_reclaim",
+   "date": "2026-07-20",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "sg_reclaim/hh_2026-07-20.png",
    "bounds": [
     103.55,
     1.15,
@@ -47,10 +77,40 @@
   },
   {
    "aoi": "sg_reclaim",
+   "date": "2026-08-13",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "sg_reclaim/hh_2026-08-13.png",
+   "bounds": [
+    103.55,
+    1.15,
+    104.1,
+    1.65
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_028_011_A_002_4005_DHDH_A_20260813T224132_20260813T224207_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "sg_reclaim",
    "date": "2026-08-25",
    "date_from": null,
    "kind": "hv",
    "png_url": "sg_reclaim/hv_2026-08-25.png",
+   "bounds": [
+    103.55,
+    1.15,
+    104.1,
+    1.65
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_029_011_A_002_4005_DHDH_A_20260825T224132_20260825T224207_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "sg_reclaim",
+   "date": "2026-08-25",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "sg_reclaim/hh_2026-08-25.png",
    "bounds": [
     103.55,
     1.15,
@@ -77,10 +137,40 @@
   },
   {
    "aoi": "sg_reclaim",
+   "date": "2026-09-06",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "sg_reclaim/hh_2026-09-06.png",
+   "bounds": [
+    103.55,
+    1.15,
+    104.1,
+    1.65
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_030_011_A_002_4005_DHDH_A_20260906T224132_20260906T224206_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "sg_reclaim",
    "date": "2026-09-18",
    "date_from": null,
    "kind": "hv",
    "png_url": "sg_reclaim/hv_2026-09-18.png",
+   "bounds": [
+    103.55,
+    1.15,
+    104.1,
+    1.65
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_031_011_A_002_4005_DHDH_A_20260918T224132_20260918T224206_P05023_F_F_J_001"
+  },
+  {
+   "aoi": "sg_reclaim",
+   "date": "2026-09-18",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "sg_reclaim/hh_2026-09-18.png",
    "bounds": [
     103.55,
     1.15,
@@ -107,10 +197,40 @@
   },
   {
    "aoi": "sg_reclaim",
+   "date": "2026-09-30",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "sg_reclaim/hh_2026-09-30.png",
+   "bounds": [
+    103.55,
+    1.15,
+    104.1,
+    1.65
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_032_011_A_002_4005_DHDH_A_20260930T224132_20260930T224207_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "sg_reclaim",
    "date": "2026-10-12",
    "date_from": null,
    "kind": "hv",
    "png_url": "sg_reclaim/hv_2026-10-12.png",
+   "bounds": [
+    103.55,
+    1.15,
+    104.1,
+    1.65
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_033_011_A_002_4005_DHDH_A_20261012T224132_20261012T224207_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "sg_reclaim",
+   "date": "2026-10-12",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "sg_reclaim/hh_2026-10-12.png",
    "bounds": [
     103.55,
     1.15,
@@ -137,6 +257,21 @@
   },
   {
    "aoi": "sg_reclaim",
+   "date": "2026-10-24",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "sg_reclaim/hh_2026-10-24.png",
+   "bounds": [
+    103.55,
+    1.15,
+    104.1,
+    1.65
+   ],
+   "maturity": "VALIDATED",
+   "granule": "NISAR_L2_PR_GCOV_034_011_A_002_4005_DHDH_A_20261024T224132_20261024T224207_P05036_N_F_J_001"
+  },
+  {
+   "aoi": "sg_reclaim",
    "date": "2026-11-05",
    "date_from": null,
    "kind": "hv",
@@ -152,10 +287,40 @@
   },
   {
    "aoi": "sg_reclaim",
+   "date": "2026-11-05",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "sg_reclaim/hh_2026-11-05.png",
+   "bounds": [
+    103.55,
+    1.15,
+    104.1,
+    1.65
+   ],
+   "maturity": "VALIDATED",
+   "granule": "NISAR_L2_PR_GCOV_035_011_A_002_4005_DHDH_A_20261105T224133_20261105T224207_P05036_N_F_J_001"
+  },
+  {
+   "aoi": "sg_reclaim",
    "date": "2026-10-12",
    "date_from": "2026-07-08",
    "kind": "change",
    "png_url": "sg_reclaim/change_2026-07-08_2026-10-12.png",
+   "bounds": [
+    103.55,
+    1.15,
+    104.1,
+    1.65
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": null
+  },
+  {
+   "aoi": "sg_reclaim",
+   "date": "2026-10-12",
+   "date_from": "2026-07-08",
+   "kind": "change_hh",
+   "png_url": "sg_reclaim/change_hh_2026-07-08_2026-10-12.png",
    "bounds": [
     103.55,
     1.15,
@@ -182,10 +347,40 @@
   },
   {
    "aoi": "riau",
+   "date": "2026-07-03",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "riau/hh_2026-07-03.png",
+   "bounds": [
+    101.7,
+    1.0,
+    102.2,
+    1.5
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_024_112_A_002_4005_DHDH_A_20260703T224954_20260703T225029_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "riau",
    "date": "2026-07-15",
    "date_from": null,
    "kind": "hv",
    "png_url": "riau/hv_2026-07-15.png",
+   "bounds": [
+    101.7,
+    1.0,
+    102.2,
+    1.5
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_025_112_A_002_4005_DHDH_A_20260715T224954_20260715T225028_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "riau",
+   "date": "2026-07-15",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "riau/hh_2026-07-15.png",
    "bounds": [
     101.7,
     1.0,
@@ -212,10 +407,40 @@
   },
   {
    "aoi": "riau",
+   "date": "2026-08-20",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "riau/hh_2026-08-20.png",
+   "bounds": [
+    101.7,
+    1.0,
+    102.2,
+    1.5
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_028_112_A_002_4005_DHDH_A_20260820T224952_20260820T225026_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "riau",
    "date": "2026-09-01",
    "date_from": null,
    "kind": "hv",
    "png_url": "riau/hv_2026-09-01.png",
+   "bounds": [
+    101.7,
+    1.0,
+    102.2,
+    1.5
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_029_112_A_002_4005_DHDH_A_20260901T224952_20260901T225026_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "riau",
+   "date": "2026-09-01",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "riau/hh_2026-09-01.png",
    "bounds": [
     101.7,
     1.0,
@@ -242,10 +467,40 @@
   },
   {
    "aoi": "riau",
+   "date": "2026-09-13",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "riau/hh_2026-09-13.png",
+   "bounds": [
+    101.7,
+    1.0,
+    102.2,
+    1.5
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_030_112_A_002_4005_DHDH_A_20260913T224951_20260913T225026_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "riau",
    "date": "2026-09-25",
    "date_from": null,
    "kind": "hv",
    "png_url": "riau/hv_2026-09-25.png",
+   "bounds": [
+    101.7,
+    1.0,
+    102.2,
+    1.5
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_031_112_A_002_4005_DHDH_A_20260925T224951_20260925T225026_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "riau",
+   "date": "2026-09-25",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "riau/hh_2026-09-25.png",
    "bounds": [
     101.7,
     1.0,
@@ -272,10 +527,40 @@
   },
   {
    "aoi": "riau",
+   "date": "2026-10-07",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "riau/hh_2026-10-07.png",
+   "bounds": [
+    101.7,
+    1.0,
+    102.2,
+    1.5
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_032_112_A_002_4005_DHDH_A_20261007T224951_20261007T225026_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "riau",
    "date": "2026-10-19",
    "date_from": null,
    "kind": "hv",
    "png_url": "riau/hv_2026-10-19.png",
+   "bounds": [
+    101.7,
+    1.0,
+    102.2,
+    1.5
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": "NISAR_L2_PR_GCOV_033_112_A_002_4005_DHDH_A_20261019T224952_20261019T225026_P05023_N_F_J_001"
+  },
+  {
+   "aoi": "riau",
+   "date": "2026-10-19",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "riau/hh_2026-10-19.png",
    "bounds": [
     101.7,
     1.0,
@@ -302,10 +587,40 @@
   },
   {
    "aoi": "riau",
+   "date": "2026-10-31",
+   "date_from": null,
+   "kind": "hh",
+   "png_url": "riau/hh_2026-10-31.png",
+   "bounds": [
+    101.7,
+    1.0,
+    102.2,
+    1.5
+   ],
+   "maturity": "VALIDATED",
+   "granule": "NISAR_L2_PR_GCOV_034_112_A_002_4005_DHDH_A_20261031T224952_20261031T225026_P05036_N_F_J_001"
+  },
+  {
+   "aoi": "riau",
    "date": "2026-10-19",
    "date_from": "2026-07-03",
    "kind": "change",
    "png_url": "riau/change_2026-07-03_2026-10-19.png",
+   "bounds": [
+    101.7,
+    1.0,
+    102.2,
+    1.5
+   ],
+   "maturity": "PROVISIONAL",
+   "granule": null
+  },
+  {
+   "aoi": "riau",
+   "date": "2026-10-19",
+   "date_from": "2026-07-03",
+   "kind": "change_hh",
+   "png_url": "riau/change_hh_2026-07-03_2026-10-19.png",
    "bounds": [
     101.7,
     1.0,
@@ -322,532 +637,608 @@
    "poly_id": "tuas",
    "poly_name": "Tuas Port reclamation (dyked basin)",
    "date": "2026-07-08",
-   "mean_hv_db": -15.37
+   "mean_hv_db": -15.37,
+   "mean_hh_db": -6.17
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tekong",
    "poly_name": "Pulau Tekong polder",
    "date": "2026-07-08",
-   "mean_hv_db": -16.01
+   "mean_hv_db": -16.01,
+   "mean_hh_db": -8.77
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "johor_plantation",
    "poly_name": "Johor plantation/forest",
    "date": "2026-07-08",
-   "mean_hv_db": -10.43
+   "mean_hv_db": -10.43,
+   "mean_hh_db": -5.27
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "ubin",
    "poly_name": "Pulau Ubin mangrove/forest",
    "date": "2026-07-08",
-   "mean_hv_db": -12.39
+   "mean_hv_db": -12.39,
+   "mean_hh_db": -6.42
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tuas",
    "poly_name": "Tuas Port reclamation (dyked basin)",
    "date": "2026-07-20",
-   "mean_hv_db": -14.15
+   "mean_hv_db": -14.15,
+   "mean_hh_db": -2.58
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tekong",
    "poly_name": "Pulau Tekong polder",
    "date": "2026-07-20",
-   "mean_hv_db": -16.06
+   "mean_hv_db": -16.06,
+   "mean_hh_db": -9.21
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "johor_plantation",
    "poly_name": "Johor plantation/forest",
    "date": "2026-07-20",
-   "mean_hv_db": -10.53
+   "mean_hv_db": -10.53,
+   "mean_hh_db": -5.39
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "ubin",
    "poly_name": "Pulau Ubin mangrove/forest",
    "date": "2026-07-20",
-   "mean_hv_db": -12.48
+   "mean_hv_db": -12.48,
+   "mean_hh_db": -6.55
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tuas",
    "poly_name": "Tuas Port reclamation (dyked basin)",
    "date": "2026-08-13",
-   "mean_hv_db": -15.5
+   "mean_hv_db": -15.5,
+   "mean_hh_db": -5.89
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tekong",
    "poly_name": "Pulau Tekong polder",
    "date": "2026-08-13",
-   "mean_hv_db": -15.99
+   "mean_hv_db": -15.99,
+   "mean_hh_db": -9.98
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "johor_plantation",
    "poly_name": "Johor plantation/forest",
    "date": "2026-08-13",
-   "mean_hv_db": -10.58
+   "mean_hv_db": -10.58,
+   "mean_hh_db": -5.53
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "ubin",
    "poly_name": "Pulau Ubin mangrove/forest",
    "date": "2026-08-13",
-   "mean_hv_db": -12.3
+   "mean_hv_db": -12.3,
+   "mean_hh_db": -6.49
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tuas",
    "poly_name": "Tuas Port reclamation (dyked basin)",
    "date": "2026-08-25",
-   "mean_hv_db": -15.1
+   "mean_hv_db": -15.1,
+   "mean_hh_db": -5.6
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tekong",
    "poly_name": "Pulau Tekong polder",
    "date": "2026-08-25",
-   "mean_hv_db": -15.99
+   "mean_hv_db": -15.99,
+   "mean_hh_db": -9.95
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "johor_plantation",
    "poly_name": "Johor plantation/forest",
    "date": "2026-08-25",
-   "mean_hv_db": -10.65
+   "mean_hv_db": -10.65,
+   "mean_hh_db": -5.57
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "ubin",
    "poly_name": "Pulau Ubin mangrove/forest",
    "date": "2026-08-25",
-   "mean_hv_db": -12.48
+   "mean_hv_db": -12.48,
+   "mean_hh_db": -6.45
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tuas",
    "poly_name": "Tuas Port reclamation (dyked basin)",
    "date": "2026-09-06",
-   "mean_hv_db": -15.34
+   "mean_hv_db": -15.34,
+   "mean_hh_db": -6.37
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tekong",
    "poly_name": "Pulau Tekong polder",
    "date": "2026-09-06",
-   "mean_hv_db": -16.15
+   "mean_hv_db": -16.15,
+   "mean_hh_db": -10.0
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "johor_plantation",
    "poly_name": "Johor plantation/forest",
    "date": "2026-09-06",
-   "mean_hv_db": -10.58
+   "mean_hv_db": -10.58,
+   "mean_hh_db": -5.57
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "ubin",
    "poly_name": "Pulau Ubin mangrove/forest",
    "date": "2026-09-06",
-   "mean_hv_db": -12.37
+   "mean_hv_db": -12.37,
+   "mean_hh_db": -6.46
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tuas",
    "poly_name": "Tuas Port reclamation (dyked basin)",
    "date": "2026-09-18",
-   "mean_hv_db": -15.41
+   "mean_hv_db": -15.41,
+   "mean_hh_db": -5.67
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tekong",
    "poly_name": "Pulau Tekong polder",
    "date": "2026-09-18",
-   "mean_hv_db": -15.97
+   "mean_hv_db": -15.97,
+   "mean_hh_db": -9.71
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "johor_plantation",
    "poly_name": "Johor plantation/forest",
    "date": "2026-09-18",
-   "mean_hv_db": -10.64
+   "mean_hv_db": -10.64,
+   "mean_hh_db": -5.55
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "ubin",
    "poly_name": "Pulau Ubin mangrove/forest",
    "date": "2026-09-18",
-   "mean_hv_db": -12.12
+   "mean_hv_db": -12.12,
+   "mean_hh_db": -6.28
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tuas",
    "poly_name": "Tuas Port reclamation (dyked basin)",
    "date": "2026-09-30",
-   "mean_hv_db": -15.47
+   "mean_hv_db": -15.47,
+   "mean_hh_db": -6.0
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tekong",
    "poly_name": "Pulau Tekong polder",
    "date": "2026-09-30",
-   "mean_hv_db": -15.68
+   "mean_hv_db": -15.68,
+   "mean_hh_db": -9.23
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "johor_plantation",
    "poly_name": "Johor plantation/forest",
    "date": "2026-09-30",
-   "mean_hv_db": -10.14
+   "mean_hv_db": -10.14,
+   "mean_hh_db": -5.09
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "ubin",
    "poly_name": "Pulau Ubin mangrove/forest",
    "date": "2026-09-30",
-   "mean_hv_db": -11.88
+   "mean_hv_db": -11.88,
+   "mean_hh_db": -6.08
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tuas",
    "poly_name": "Tuas Port reclamation (dyked basin)",
    "date": "2026-10-12",
-   "mean_hv_db": -16.02
+   "mean_hv_db": -16.02,
+   "mean_hh_db": -6.17
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tekong",
    "poly_name": "Pulau Tekong polder",
    "date": "2026-10-12",
-   "mean_hv_db": -15.91
+   "mean_hv_db": -15.91,
+   "mean_hh_db": -9.8
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "johor_plantation",
    "poly_name": "Johor plantation/forest",
    "date": "2026-10-12",
-   "mean_hv_db": -10.27
+   "mean_hv_db": -10.27,
+   "mean_hh_db": -5.24
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "ubin",
    "poly_name": "Pulau Ubin mangrove/forest",
    "date": "2026-10-12",
-   "mean_hv_db": -12.2
+   "mean_hv_db": -12.2,
+   "mean_hh_db": -6.53
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tuas",
    "poly_name": "Tuas Port reclamation (dyked basin)",
    "date": "2026-10-24",
-   "mean_hv_db": -15.22
+   "mean_hv_db": -15.22,
+   "mean_hh_db": -5.81
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tekong",
    "poly_name": "Pulau Tekong polder",
    "date": "2026-10-24",
-   "mean_hv_db": -16.2
+   "mean_hv_db": -16.2,
+   "mean_hh_db": -10.31
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "johor_plantation",
    "poly_name": "Johor plantation/forest",
    "date": "2026-10-24",
-   "mean_hv_db": -10.61
+   "mean_hv_db": -10.61,
+   "mean_hh_db": -5.71
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "ubin",
    "poly_name": "Pulau Ubin mangrove/forest",
    "date": "2026-10-24",
-   "mean_hv_db": -12.35
+   "mean_hv_db": -12.35,
+   "mean_hh_db": -5.85
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tuas",
    "poly_name": "Tuas Port reclamation (dyked basin)",
    "date": "2026-11-05",
-   "mean_hv_db": -15.2
+   "mean_hv_db": -15.2,
+   "mean_hh_db": -5.68
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "tekong",
    "poly_name": "Pulau Tekong polder",
    "date": "2026-11-05",
-   "mean_hv_db": -15.94
+   "mean_hv_db": -15.94,
+   "mean_hh_db": -9.95
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "johor_plantation",
    "poly_name": "Johor plantation/forest",
    "date": "2026-11-05",
-   "mean_hv_db": -10.58
+   "mean_hv_db": -10.58,
+   "mean_hh_db": -5.61
   },
   {
    "aoi": "sg_reclaim",
    "poly_id": "ubin",
    "poly_name": "Pulau Ubin mangrove/forest",
    "date": "2026-11-05",
-   "mean_hv_db": -12.23
+   "mean_hv_db": -12.23,
+   "mean_hh_db": -6.61
   },
   {
    "aoi": "riau",
    "poly_id": "peat_forest",
    "poly_name": "Intact peat swamp forest (GSK-BB core)",
    "date": "2026-07-03",
-   "mean_hv_db": -10.31
+   "mean_hv_db": -10.31,
+   "mean_hh_db": -5.69
   },
   {
    "aoi": "riau",
    "poly_id": "loss_block",
    "poly_name": "Plantation block, HV loss (clearing or burn)",
    "date": "2026-07-03",
-   "mean_hv_db": -11.97
+   "mean_hv_db": -11.97,
+   "mean_hh_db": -6.65
   },
   {
    "aoi": "riau",
    "poly_id": "loss_river",
    "poly_name": "Riverside patches, HV loss",
    "date": "2026-07-03",
-   "mean_hv_db": -15.66
+   "mean_hv_db": -15.66,
+   "mean_hh_db": -6.46
   },
   {
    "aoi": "riau",
    "poly_id": "regrowth",
    "poly_name": "Plantation block, HV gain (regrowth)",
    "date": "2026-07-03",
-   "mean_hv_db": -15.8
+   "mean_hv_db": -15.8,
+   "mean_hh_db": -7.6
   },
   {
    "aoi": "riau",
    "poly_id": "peat_forest",
    "poly_name": "Intact peat swamp forest (GSK-BB core)",
    "date": "2026-07-15",
-   "mean_hv_db": -10.38
+   "mean_hv_db": -10.38,
+   "mean_hh_db": -5.77
   },
   {
    "aoi": "riau",
    "poly_id": "loss_block",
    "poly_name": "Plantation block, HV loss (clearing or burn)",
    "date": "2026-07-15",
-   "mean_hv_db": -12.36
+   "mean_hv_db": -12.36,
+   "mean_hh_db": -6.78
   },
   {
    "aoi": "riau",
    "poly_id": "loss_river",
    "poly_name": "Riverside patches, HV loss",
    "date": "2026-07-15",
-   "mean_hv_db": -15.68
+   "mean_hv_db": -15.68,
+   "mean_hh_db": -7.02
   },
   {
    "aoi": "riau",
    "poly_id": "regrowth",
    "poly_name": "Plantation block, HV gain (regrowth)",
    "date": "2026-07-15",
-   "mean_hv_db": -16.47
+   "mean_hv_db": -16.47,
+   "mean_hh_db": -8.14
   },
   {
    "aoi": "riau",
    "poly_id": "peat_forest",
    "poly_name": "Intact peat swamp forest (GSK-BB core)",
    "date": "2026-08-20",
-   "mean_hv_db": -10.17
+   "mean_hv_db": -10.17,
+   "mean_hh_db": -5.55
   },
   {
    "aoi": "riau",
    "poly_id": "loss_block",
    "poly_name": "Plantation block, HV loss (clearing or burn)",
    "date": "2026-08-20",
-   "mean_hv_db": -13.84
+   "mean_hv_db": -13.84,
+   "mean_hh_db": -7.4
   },
   {
    "aoi": "riau",
    "poly_id": "loss_river",
    "poly_name": "Riverside patches, HV loss",
    "date": "2026-08-20",
-   "mean_hv_db": -16.38
+   "mean_hv_db": -16.38,
+   "mean_hh_db": -7.83
   },
   {
    "aoi": "riau",
    "poly_id": "regrowth",
    "poly_name": "Plantation block, HV gain (regrowth)",
    "date": "2026-08-20",
-   "mean_hv_db": -15.0
+   "mean_hv_db": -15.0,
+   "mean_hh_db": -7.31
   },
   {
    "aoi": "riau",
    "poly_id": "peat_forest",
    "poly_name": "Intact peat swamp forest (GSK-BB core)",
    "date": "2026-09-01",
-   "mean_hv_db": -10.14
+   "mean_hv_db": -10.14,
+   "mean_hh_db": -5.46
   },
   {
    "aoi": "riau",
    "poly_id": "loss_block",
    "poly_name": "Plantation block, HV loss (clearing or burn)",
    "date": "2026-09-01",
-   "mean_hv_db": -14.79
+   "mean_hv_db": -14.79,
+   "mean_hh_db": -7.41
   },
   {
    "aoi": "riau",
    "poly_id": "loss_river",
    "poly_name": "Riverside patches, HV loss",
    "date": "2026-09-01",
-   "mean_hv_db": -15.86
+   "mean_hv_db": -15.86,
+   "mean_hh_db": -7.44
   },
   {
    "aoi": "riau",
    "poly_id": "regrowth",
    "poly_name": "Plantation block, HV gain (regrowth)",
    "date": "2026-09-01",
-   "mean_hv_db": -14.45
+   "mean_hv_db": -14.45,
+   "mean_hh_db": -6.85
   },
   {
    "aoi": "riau",
    "poly_id": "peat_forest",
    "poly_name": "Intact peat swamp forest (GSK-BB core)",
    "date": "2026-09-13",
-   "mean_hv_db": -10.14
+   "mean_hv_db": -10.14,
+   "mean_hh_db": -5.54
   },
   {
    "aoi": "riau",
    "poly_id": "loss_block",
    "poly_name": "Plantation block, HV loss (clearing or burn)",
    "date": "2026-09-13",
-   "mean_hv_db": -15.92
+   "mean_hv_db": -15.92,
+   "mean_hh_db": -7.7
   },
   {
    "aoi": "riau",
    "poly_id": "loss_river",
    "poly_name": "Riverside patches, HV loss",
    "date": "2026-09-13",
-   "mean_hv_db": -16.05
+   "mean_hv_db": -16.05,
+   "mean_hh_db": -7.54
   },
   {
    "aoi": "riau",
    "poly_id": "regrowth",
    "poly_name": "Plantation block, HV gain (regrowth)",
    "date": "2026-09-13",
-   "mean_hv_db": -14.78
+   "mean_hv_db": -14.78,
+   "mean_hh_db": -7.46
   },
   {
    "aoi": "riau",
    "poly_id": "peat_forest",
    "poly_name": "Intact peat swamp forest (GSK-BB core)",
    "date": "2026-09-25",
-   "mean_hv_db": -10.17
+   "mean_hv_db": -10.17,
+   "mean_hh_db": -5.66
   },
   {
    "aoi": "riau",
    "poly_id": "loss_block",
    "poly_name": "Plantation block, HV loss (clearing or burn)",
    "date": "2026-09-25",
-   "mean_hv_db": -16.8
+   "mean_hv_db": -16.8,
+   "mean_hh_db": -7.7
   },
   {
    "aoi": "riau",
    "poly_id": "loss_river",
    "poly_name": "Riverside patches, HV loss",
    "date": "2026-09-25",
-   "mean_hv_db": -16.76
+   "mean_hv_db": -16.76,
+   "mean_hh_db": -8.18
   },
   {
    "aoi": "riau",
    "poly_id": "regrowth",
    "poly_name": "Plantation block, HV gain (regrowth)",
    "date": "2026-09-25",
-   "mean_hv_db": -14.43
+   "mean_hv_db": -14.43,
+   "mean_hh_db": -7.23
   },
   {
    "aoi": "riau",
    "poly_id": "peat_forest",
    "poly_name": "Intact peat swamp forest (GSK-BB core)",
    "date": "2026-10-07",
-   "mean_hv_db": -10.08
+   "mean_hv_db": -10.08,
+   "mean_hh_db": -5.57
   },
   {
    "aoi": "riau",
    "poly_id": "loss_block",
    "poly_name": "Plantation block, HV loss (clearing or burn)",
    "date": "2026-10-07",
-   "mean_hv_db": -17.3
+   "mean_hv_db": -17.3,
+   "mean_hh_db": -8.12
   },
   {
    "aoi": "riau",
    "poly_id": "loss_river",
    "poly_name": "Riverside patches, HV loss",
    "date": "2026-10-07",
-   "mean_hv_db": -16.74
+   "mean_hv_db": -16.74,
+   "mean_hh_db": -8.2
   },
   {
    "aoi": "riau",
    "poly_id": "regrowth",
    "poly_name": "Plantation block, HV gain (regrowth)",
    "date": "2026-10-07",
-   "mean_hv_db": -13.79
+   "mean_hv_db": -13.79,
+   "mean_hh_db": -6.76
   },
   {
    "aoi": "riau",
    "poly_id": "peat_forest",
    "poly_name": "Intact peat swamp forest (GSK-BB core)",
    "date": "2026-10-19",
-   "mean_hv_db": -10.06
+   "mean_hv_db": -10.06,
+   "mean_hh_db": -5.6
   },
   {
    "aoi": "riau",
    "poly_id": "loss_block",
    "poly_name": "Plantation block, HV loss (clearing or burn)",
    "date": "2026-10-19",
-   "mean_hv_db": -17.21
+   "mean_hv_db": -17.21,
+   "mean_hh_db": -8.04
   },
   {
    "aoi": "riau",
    "poly_id": "loss_river",
    "poly_name": "Riverside patches, HV loss",
    "date": "2026-10-19",
-   "mean_hv_db": -16.64
+   "mean_hv_db": -16.64,
+   "mean_hh_db": -8.05
   },
   {
    "aoi": "riau",
    "poly_id": "regrowth",
    "poly_name": "Plantation block, HV gain (regrowth)",
    "date": "2026-10-19",
-   "mean_hv_db": -13.02
+   "mean_hv_db": -13.02,
+   "mean_hh_db": -5.98
   },
   {
    "aoi": "riau",
    "poly_id": "peat_forest",
    "poly_name": "Intact peat swamp forest (GSK-BB core)",
    "date": "2026-10-31",
-   "mean_hv_db": -10.11
+   "mean_hv_db": -10.11,
+   "mean_hh_db": -5.63
   },
   {
    "aoi": "riau",
    "poly_id": "loss_block",
    "poly_name": "Plantation block, HV loss (clearing or burn)",
    "date": "2026-10-31",
-   "mean_hv_db": -17.05
+   "mean_hv_db": -17.05,
+   "mean_hh_db": -8.35
   },
   {
    "aoi": "riau",
    "poly_id": "loss_river",
    "poly_name": "Riverside patches, HV loss",
    "date": "2026-10-31",
-   "mean_hv_db": -16.96
+   "mean_hv_db": -16.96,
+   "mean_hh_db": -8.57
   },
   {
    "aoi": "riau",
    "poly_id": "regrowth",
    "poly_name": "Plantation block, HV gain (regrowth)",
    "date": "2026-10-31",
-   "mean_hv_db": -12.63
+   "mean_hv_db": -12.63,
+   "mean_hh_db": -5.83
   }
  ],
  "polys": [
