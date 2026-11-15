@@ -20,10 +20,25 @@ export default function About({ open, onClose }: { open: boolean; onClose: () =>
           <h2>About</h2>
           <button className="btn" onClick={onClose} autoFocus>Close</button>
         </div>
-        <h3>NISAR</h3>
+        <h3 className="sec">Why I built this</h3>
+        <p>I&apos;m Indonesian and I&apos;ve been staying in Singapore since 2003. There were times I wondered why people back home kept burning the trees, but I didn&apos;t really think about it until the haze got so bad I could barely see the road 20 metres ahead of me when I was riding. If it&apos;s that bad in Singapore, I can&apos;t imagine what it&apos;s like in Riau or Kalimantan where it starts. I&apos;m kind of on the fence about it. I&apos;m affected because I live here, but I&apos;m still Indonesian by blood, and honestly I just don&apos;t want to see them destroy nature.</p>
+        <h3 className="sec">Who could use this (the author&apos;s proposal)</h3>
+        <ul>
+          <li>Haze and peat monitoring agencies and NGOs: clearing alerts every 12 days, regardless of cloud.</li>
+          <li>Singapore coastal and land agencies: track reclamation and coastal works through monsoon cloud.</li>
+          <li>Educators and the public: see the haze source, not just the PSI number.</li>
+        </ul>
+        <h3 className="sec">Future applications of NISAR</h3>
+        <ul>
+          <li>InSAR ground motion: settlement of reclaimed land, and Marina Bay and East Coast against sea-level rise (mm per year).</li>
+          <li>Peat subsidence and peat moisture as an early fire-risk signal (L-band, soil moisture product).</li>
+          <li>Automated 12-day clearing alerts for peat domes.</li>
+          <li>Flood mapping in Johor and Singapore through monsoon cloud.</li>
+        </ul>
+        <h3 className="sec">NISAR</h3>
         <p>NISAR is a NASA-ISRO radar satellite. Its L-band radar (about 24 cm wavelength) sends its own signal, so it images day and night and passes through cloud, smoke and haze. It also penetrates vegetation canopies, which is why it can see forest and peat surfaces that optical cameras lose under smoke.</p>
         <h3>How the overlays were made</h3>
-        <p>Overlays come from NISAR L2 GCOV products clipped to each area. HV backscatter (cross-polarised, dominated by volume scattering in vegetation) is converted to dB. The change layer is the HV dB difference between two dates, with changes under 3 dB either way left transparent: loss can mean clearing, burning, new water or sand fill; gain can mean new structures or vegetation growth. Many scenes are PROVISIONAL maturity (calibration may still change); later ones are VALIDATED and may differ in calibration, so small changes between those groups should be read with care. The orange streaks over open sea in the live NISAR tiles are processing artifacts.</p>
+        <p>Overlays come from NISAR L2 GCOV products clipped to each area. HV and HH backscatter (cross-polarised, dominated by volume scattering in vegetation) is converted to dB. The change layer is the HV dB difference between two dates, with changes under 3 dB either way left transparent: loss can mean clearing, burning, new water or sand fill; gain can mean new structures or vegetation growth. Many scenes are PROVISIONAL maturity (calibration may still change); later ones are VALIDATED and may differ in calibration, so small changes between those groups should be read with care. The orange streaks over open sea in the live NISAR tiles are processing artifacts.</p>
         <h3>Data sources</h3>
         <ul>
           <li><L href="https://nasa-gibs.github.io/gibs-api-docs/">NASA GIBS</L>: live NISAR, MODIS Terra true colour and VIIRS (NOAA-20) thermal anomaly tiles.</li>
