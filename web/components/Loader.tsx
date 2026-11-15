@@ -9,7 +9,8 @@ export default function Loader({ mapReady }: { mapReady: boolean }) {
 
   useEffect(() => {
     document.fonts.ready.then(() => setFonts(true));
-    const cap = setTimeout(() => setCapped(true), 8000);
+    // starts after hydration, so real wait is longer; the radar-side "receiving tiles" chip covers the rest
+    const cap = setTimeout(() => setCapped(true), 5000);
     return () => clearTimeout(cap);
   }, []);
 
