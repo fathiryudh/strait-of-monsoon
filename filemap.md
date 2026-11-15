@@ -9,6 +9,6 @@ pipeline/out/ — generated PNGs per AOI + manifest.json (scenes, stats, polys);
 pipeline/data/raw/ — gitignored .npy cache of fetched clips
 web/ — Next.js map app (README.md)
 web/app/ — layout, globals.css (tokens, all styles), page
-web/components/ — App (state, chapters), SwipeMap (two synced MapLibre maps), PassRuler, Loader, Scramble, StatsChart, About
-web/lib/data.ts — GIBS tile URLs, default dates/bounds, Supabase + manifest.json loader
+web/components/ — App (state, chapters, overlay toggles), SwipeMap (two synced MapLibre maps, processed/change/population layers, tile status chip), PassRuler, Loader, Scramble, StatsChart, About
+web/lib/data.ts — GIBS tile URLs (NISAR, MODIS, VIIRS, GPW population), default dates/bounds, Supabase + manifest.json loader
 web/public/overlays/ — pipeline drops PNGs + manifest.json here
