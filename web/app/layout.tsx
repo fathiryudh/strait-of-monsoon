@@ -6,9 +6,8 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Through the Haze",
-  description:
-    "What Singapore cannot see through haze and cloud: Riau peat fires and Singapore's reclaimed land, seen by NISAR L-band radar. NASA Space Apps 2026.",
+  title: "Strait of Monsoon",
+  description: "See Southeast Asia's monsoon through the clouds with NASA-ISRO NISAR radar.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
