@@ -6,3 +6,6 @@ __pycache__/
 data/raw/
 *.h5
 *.tif
+pipeline/out/
+pipeline/data/
+.gstack/
