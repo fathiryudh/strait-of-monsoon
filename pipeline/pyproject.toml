@@ -1,0 +1,19 @@
+[project]
+name = "through-the-haze-pipeline"
+version = "0.1.0"
+requires-python = "==3.12.*"
+dependencies = [
+  "asf_search",
+  "earthaccess",
+  "fsspec",
+  "aiohttp",
+  "h5py",
+  "numpy",
+  "pyproj",
+  "scipy",
+  "matplotlib",
+  "pillow",
+  "supabase",
+  "python-dotenv",
+  "requests",
+]
