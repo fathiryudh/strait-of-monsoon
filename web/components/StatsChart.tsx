@@ -5,16 +5,16 @@ import type { Stat } from "@/lib/data";
 const COLORS = ["#7fe3ec", "#f5f5f5", "#ff4d00", "#9a9a9a", "#5a5a5a"];
 const tick = { fill: "#9a9a9a", fontSize: 10, fontFamily: "var(--font-geist-mono)" };
 
-export default function StatsChart({ stats, date }: { stats: Stat[]; date: string }) {
+export default function StatsChart({ stats, date, pol = "hv" }: { stats: Stat[]; date: string; pol?: "hv" | "hh" }) {
   const polys = [...new Map(stats.map((s) => [s.poly_id, s.poly_name])).entries()];
   const rows = [...new Set(stats.map((s) => s.date))].sort().map((d) => {
     const r: Record<string, string | number> = { date: d };
-    stats.filter((s) => s.date === d).forEach((s) => (r[s.poly_id] = s.mean_hv_db));
+    stats.filter((s) => s.date === d).forEach((s) => { const v = pol === "hh" ? s.mean_hh_db : s.mean_hv_db; if (v != null) r[s.poly_id] = v; });
     return r;
   });
   return (
-    <div className="chart" aria-label="Mean HV backscatter in dB per area over time">
-      <div className="label">Mean HV (dB) per area</div>
+    <div className="chart" aria-label={`Mean ${pol.toUpperCase()} backscatter in dB per area over time`}>
+      <div className="label">Mean {pol.toUpperCase()} (dB) per area</div>
       <ResponsiveContainer width="100%" height={130}>
         <LineChart data={rows} margin={{ top: 6, right: 6, bottom: 0, left: -18 }}>
           <CartesianGrid stroke="#3a3a3a" vertical={false} />
