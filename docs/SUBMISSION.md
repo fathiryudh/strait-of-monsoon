@@ -1,10 +1,10 @@
 # Submission text (copy into the Space Apps project page)
 
 ## Project Name
-Through the Haze
+Strait of Monsoon
 
 ## High-Level Summary
-Every dry season the smoke from Indonesia's peat fires drifts over to Singapore, and most satellite photos of the ground turn into grey haze. NISAR's L-band radar sees through cloud and smoke, so I built a map where you can swipe from the hazy photo to the radar view of the same place, play the 12-day passes as a time-lapse, and look at change maps I made from the raw NISAR data. Over Riau's peatland you can see plantation blocks getting cleared between July and October 2026 while the intact peat forest next to them stays the same. Over Singapore you can still see the reclaimed coastline when the optical image is almost all cloud.
+The monsoon hits all of Southeast Asia, but it does different things in different places, and during the monsoon most satellite photos are just cloud. NISAR's L-band radar sees through cloud, so I built a guided map, simple enough for kids, that shows what the monsoon does to the ground. It starts in Singapore (cloud vs radar, and how to read the radar colours), goes to Cambodia's Tonle Sap, where you press play and watch the lake grow almost 4 times between June and October 2026, then to central Thailand, where you swipe between before and after radar of this year's floods. After the tour you can explore on your own.
 
 ## Link to Project Demo
 <YouTube/Drive link to the 30 s video, test it in incognito>
@@ -14,17 +14,19 @@ https://through-the-haze.vercel.app
 Code: https://github.com/fathiryudh/through-the-haze
 
 ## Detailed Description
-It's a web map with three parts. 01 Haze is Riau's peatland near Bengkalis: MODIS true colour on one side, NISAR radar on the other, an HV change map from Jul 3 to Oct 19, 2026, and a chart of how the radar signal changed in each area. 02 Land is a time-lapse of 10 NISAR passes over Tuas, Pulau Tekong and the Johor Strait, from Jul 8 to Nov 5, 2026. 03 Explore lets you look at NISAR imagery anywhere, on any date. You can flip between HV and HH, turn on fire hotspots or population density, and read what I think is causing each change.
+It opens with an 11-step guided tour. Each step moves the map, turns on the right layers, points at what to look at, and asks you to do something (drag the line, press play). In Singapore you see a camera image that's almost all cloud on 8 July 2026, drag a line to reveal NISAR radar underneath, learn what the colours mean (green is plants, orange is buildings, dark blue is calm water), and see the land Singapore made at Pulau Tekong and Changi East. At Tonle Sap you press play through the 2026 passes and watch the lake spread, with a chart of open water area. In central Thailand you compare radar from 6 September and 12 October and see the new floodwater around the Chao Phraya and Bang Pakong rivers. After that there are free chapters for Singapore, Tonle Sap, the Thailand floods, Riau's forests in Indonesia, and NISAR anywhere.
 
-What I found: in Riau, one plantation block lost 5.1 dB of HV from July to October, which looks like clearing or burning. A regrowth block went up 3.2 dB, and the intact peat swamp forest stayed at about -10 dB the whole time. HV showed the clearing much better than HH did (-5.1 vs -1.7 dB in the same block), because HV mostly comes from the canopy and drops hard once it's gone. Singapore's reclaimed land was steady within ±0.6 dB over the four months. Settlement there is millimetres, which needs InSAR, but HH did pick up construction at Changi East. For drivers, I think it's mostly people: peat drainage and plantation clearing in Riau, made worse by the dry season and El Niño, and reclamation and construction around Singapore.
+What I found: Tonle Sap's open water grew from 323 km² on 19 June to 1,239 km² on 17 October, almost 4 times (this NISAR frame covers the western two-thirds of the lake, so those numbers are for that part). The drop to 965 km² on 29 October might partly be a calibration change, since it's the first VALIDATED date. The driver is the monsoon: the Mekong gets so full it reverses the Tonle Sap River and pushes water into the lake, which brings fish and rich mud for rice. In Thailand, weeks of heavy rain filled the rivers until they spilled over. In Chachoengsao province about 437 km² was flooded and nearly 59,000 households were affected by early October, and the radar shows it draining by 5 November. Singapore's reclaimed land stayed steady within ±0.6 dB over July to November.
 
-How it works: a Python pipeline searches ASF for NISAR L2 GCOV granules and reads only the HDF5 chunks over each area through HTTPS, so it's about 100 MB per date instead of about 5 GB. It turns HV and HH into dB at 40 m, makes change maps with a ±3 dB threshold (water and patches under 8 ha masked out), works out per-area stats and uploads everything to Supabase. The Next.js and MapLibre site reads from Supabase and pulls live tiles from NASA GIBS.
+Polarization: flooded forest at Tonle Sap comes back very bright because the echo bounces off the water and then the tree trunks, while open water looks dark. In Riau, HV picked up tree harvesting much better than HH (-5.1 dB vs -1.7 dB in the same block), because HV mostly comes from the canopy.
 
-Who it could help: the radar sees the ground every 12 days no matter the weather, so haze and peat monitoring groups could get clearing alerts in the months when optical satellites are blind. Singapore's coastal and land agencies could follow reclamation through monsoon cloud. And normal people like me could see where the haze actually comes from, not just the PSI number.
+How it works: a Python pipeline searches ASF for NISAR L2 GCOV granules and reads only the HDF5 chunks over each area through HTTPS (about 100 MB per date instead of about 5 GB). It turns HH and HV into dB, makes water masks (fixed -17 dB HH threshold for Tonle Sap), change maps and per-area stats, and uploads them to Supabase. The Next.js and MapLibre site reads from Supabase and pulls live tiles from NASA GIBS.
 
-What I'd do next: InSAR ground motion for reclaimed land, and for Marina Bay and the East Coast against sea-level rise. Peat moisture and subsidence from L-band as an early warning for fire risk. Automatic 12-day clearing alerts for peat domes. Flood maps for Johor and Singapore.
+Who it could help: teachers and students who want to see the region's monsoon rhythm, not just a weather report. Flood and water planners on the Mekong, who could get the lake's size every 12 days even under cloud. Land and coastal agencies watching reclaimed land and forests through the wet season.
 
-**Why I built this.** I'm Indonesian and I've been staying in Singapore since 2003. There were times I wondered why people back home kept burning the trees, but I didn't really think about it until the haze got so bad I could barely see the road 20 metres ahead of me when I was riding. If it's that bad in Singapore, I can't imagine what it's like in Riau or Kalimantan where it starts. I'm kind of on the fence about it. I'm affected because I live here, but I'm still Indonesian by blood, and honestly I just don't want to see them destroy nature.
+What I'd do next: flood maps that update with every pass during a storm, spotting slopes that are about to slide, InSAR to measure land slowly sinking, and crop calendars for rice from the radar alone.
+
+**Why I built this.** I'm Indonesian and I've been staying in Singapore since 2003. Both countries share the same monsoon, the same clouds and the same seasons, and I've always wondered what's actually happening on the ground across the region. NISAR's radar lets me look.
 
 **Tools.** Python 3.12, uv, asf_search, h5py, NumPy, rasterio, matplotlib, supabase-py; Next.js, TypeScript, MapLibre GL, Recharts, supabase-js; Supabase (Postgres and Storage); Vercel.
 
@@ -33,24 +35,26 @@ I wrote the code with help from AI (Claude Code). The idea, the places, the data
 
 ## NASA Data
 - NISAR L2 GCOV (Geocoded Polarimetric Covariance), NASA/ISRO, via ASF DAAC: https://search.asf.alaska.edu
-- NASA GIBS (WMTS/WMS): https://gibs.earthdata.nasa.gov, using the layers NISAR_L2_Geocoded_Polarimetric_Covariance, MODIS_Terra_CorrectedReflectance_TrueColor, VIIRS_NOAA20_Thermal_Anomalies_375m_All and GPW_Population_Density_2020 (SEDAC)
+- NASA GIBS (WMTS): https://gibs.earthdata.nasa.gov, using the layers NISAR_L2_Geocoded_Polarimetric_Covariance, MODIS_Terra_CorrectedReflectance_TrueColor and GPW_Population_Density_2020 (SEDAC)
+- NISAR colour key: ASF NISAR Worldview docs, https://nisar-docs.asf.alaska.edu/worldview/
 
 ## References
 - Challenge: https://www.spaceappschallenge.org/2026/challenges/dancing-with-the-sars/
 - ASF NISAR Cookbook: https://github.com/ASFOpenSARlab/NISAR_Cookbook
+- Thailand flood impact: Nation Thailand / DDPM and other sources listed in docs/research/monsoon-events.md
+- Singapore reclamation facts: docs/research/singapore.md
 - Basemap: Esri World Dark Gray Canvas (Esri, HERE, Garmin, OpenStreetMap contributors)
 - Libraries: Next.js, MapLibre GL JS, Recharts, Supabase, asf_search, h5py, NumPy, rasterio, matplotlib
-- Context sources (peat hotspots, reclamation figures, InSAR studies of Singapore): see docs/research/singapore.md in the repo
 
 # 30-second video script
 
 | Time | On screen | Voice / caption |
 |---|---|---|
-| 0-3 s | Title card: THROUGH THE HAZE | "Through the Haze, by Fathir." |
-| 3-7 s | Real haze photo or the hazy MODIS side | "NASA Space Apps, Dancing with the SARs. When the haze comes, satellites can't see the ground." |
-| 7-14 s | App, chapter 01: drag the swipe from haze to radar | "NISAR's L-band radar can, through smoke and cloud, every 12 days." |
-| 14-21 s | Change map plus the chart line dropping | "In Riau, it caught plantation blocks being cleared from July to October, while the peat forest stayed the same." |
-| 21-26 s | Chapter 02: time-lapse over Singapore | "Over Singapore, it watches the land we built, even under full cloud." |
-| 26-30 s | URL card | "Next: settlement and fire-risk alerts. through-the-haze.vercel.app" |
+| 0-3 s | Title: STRAIT OF MONSOON | "Strait of Monsoon, by Fathir." |
+| 3-8 s | Tour step 1, Singapore all cloud | "NASA Space Apps, Dancing with the SARs. In the monsoon, satellite photos of Southeast Asia are mostly cloud." |
+| 8-13 s | Drag the line, radar appears | "NISAR's radar sees through it, every 12 days." |
+| 13-20 s | Tonle Sap, press play, lake spreads, chart rises | "In Cambodia, the monsoon made Tonle Sap almost 4 times bigger by October." |
+| 20-26 s | Thailand before/after swipe | "In Thailand, it showed this year's floods spreading, and draining." |
+| 26-30 s | URL card | "Next: live flood maps and landslide warnings. through-the-haze.vercel.app" |
 
 Keep it at 30 s or less (longer makes you ineligible). Add English captions.
