@@ -1,24 +1,30 @@
-# Through the Haze
+# Strait of Monsoon
 
 My project for NASA Space Apps Challenge 2026, "Dancing with the SARs".
 Live: https://through-the-haze.vercel.app
 
-When the haze comes, normal satellite photos of Riau and Singapore are mostly just smoke and cloud. NISAR's L-band radar can still see the ground, so I put the two next to each other and used NISAR GCOV data to track what changes every 12 days.
+The monsoon hits all of Southeast Asia, but it doesn't look the same everywhere. In Singapore it's mostly heavy rain and grey skies. In Cambodia it makes a whole lake grow. In Thailand this year it flooded farms and towns. The annoying part is that normal satellite photos during the monsoon are mostly cloud, so you can't actually see any of it. NISAR's L-band radar sees through cloud, so I used it to show what the monsoon does to the ground, every 12 days.
 
-The app has three parts. In 01 Haze you swipe between MODIS true colour and NISAR radar over Riau's peatland (around Giam Siak Kecil-Bukit Batu, Bengkalis), with an HV change map from Jul 3 to Oct 19, 2026. 02 Land is a 10-pass time-lapse over Tuas, Pulau Tekong and the Johor Strait, Jul 8 to Nov 5, 2026. 03 Explore lets you look at NISAR anywhere on any date through NASA GIBS.
+The site opens with a short guided tour that's meant to be easy enough for kids:
+
+1. Singapore. What the camera sees (cloud), what the radar sees, how to read the radar colours, and the land Singapore built at Tekong and Changi East.
+2. Tonle Sap, Cambodia. Press play and the lake grows from about 320 km² in June to about 1,240 km² in mid October, because the Mekong gets so full it pushes water back up into the lake. Also how flooded forest looks different to radar.
+3. Central Thailand. Before and after radar of the September to October 2026 floods around the Chao Phraya and Bang Pakong rivers.
+4. Your turn. What NISAR could do next, then you can explore on your own (there's also a Forests chapter for Riau, Indonesia, and NISAR anywhere through NASA GIBS).
 
 ## What I found
-- In Riau, one plantation block lost 5.1 dB of HV backscatter from July to October, which looks like clearing or burning. A regrowth block went up 3.2 dB, and the intact peat swamp forest stayed flat at about -10 dB.
-- HV picked up the clearing way better than HH did (HH only moved -1.7 dB in the same block). HV mostly comes from the canopy, so it drops a lot when the canopy is gone.
-- Singapore's reclaimed land barely moved, within ±0.6 dB over the four months. Settlement there is millimetres, so you'd need InSAR to see it, and that's what I'd do next. HH did catch construction at Changi East.
+- Tonle Sap's open water grew almost 4 times, from 323 km² on 19 June to 1,239 km² on 17 October 2026 (western part of the lake only, which is what this NISAR frame covers). The drop to 965 km² on 29 October may partly be a calibration change, since that's the first VALIDATED date.
+- In central Thailand, large areas of farmland turned to standing water between 6 September and 12 October and were draining by 5 November. Camera images on 12 October were mostly cloud.
+- Singapore's reclaimed land stayed steady, within ±0.6 dB over July to November. Sinking there is millimetres a year, so you'd need InSAR for that.
+- Polarization: in flooded forest at Tonle Sap the echo bounces off the water and then the trunks, so it comes back really bright, while open water looks dark. In Riau, HV picked up tree harvesting way better than HH (-5.1 dB vs -1.7 dB in the same block), because HV mostly comes from the canopy.
 
 ## How it works
-`pipeline/` is Python 3.12 (uv). It searches ASF for NISAR L2 GCOV, reads only the HDF5 chunks over each area through HTTPS, turns HV/HH into dB at 40 m, makes change maps (±3 dB, with water and patches under 8 ha masked) and per-area stats, then uploads it all to Supabase. Granule IDs and caveats are in `pipeline/README.md`.
+`pipeline/` is Python 3.12 (uv). It searches ASF for NISAR L2 GCOV, reads only the HDF5 chunks over each area through HTTPS, turns HH/HV into dB, makes change maps and water masks (fixed -17 dB HH threshold for Tonle Sap) and per-area stats, then uploads it all to Supabase. Granule IDs, thresholds and caveats are in `pipeline/README.md`.
 
-`web/` is Next.js with MapLibre, Supabase and Recharts. The live tiles come straight from NASA GIBS (NISAR GCOV, MODIS Terra, VIIRS thermal anomalies, GPW population). More in `web/README.md`.
+`web/` is Next.js with MapLibre, Supabase and Recharts. Live tiles come straight from NASA GIBS (NISAR GCOV, MODIS Terra, GPW population). The tour steps are in `web/lib/tour.ts`. More in `web/README.md`.
 
 ## Data
-NISAR L2 GCOV (NASA/ISRO, via ASF DAAC), NASA GIBS, MODIS Terra corrected reflectance, VIIRS NOAA-20 thermal anomalies, SEDAC GPW v4 population density. My research notes and sources are in `docs/research/`.
+NISAR L2 GCOV (NASA/ISRO, via ASF DAAC), NASA GIBS, MODIS Terra corrected reflectance, SEDAC GPW v4 population density. Thailand flood impact numbers are from Thai news and government sources listed in `docs/research/monsoon-events.md`. Other research notes are in `docs/research/`.
 
 ## AI use
 I wrote the code with help from AI (Claude Code). The idea, the places, the data choices and the story are mine.
