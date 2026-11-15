@@ -30,7 +30,11 @@ a { color: var(--text); }
 .chip { position: absolute; top: var(--top); z-index: 5; padding: 4px 8px; background: var(--surface); backdrop-filter: blur(12px); border: 1px solid var(--line); }
 .chip-l { left: 16px; color: var(--haze); }
 .chip-r { right: 16px; color: var(--radar); }
-.maps .maplibregl-ctrl-top-right { top: calc(var(--top) + 32px); }
+.chip-s { right: 16px; top: calc(var(--top) + 30px); color: var(--radar); text-transform: none; }
+.pulse { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--radar); margin-right: 6px; animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .25; } }
+@media (prefers-reduced-motion: reduce) { .pulse { animation: none; } }
+.maps .maplibregl-ctrl-top-right { top: calc(var(--top) + 62px); }
 .maplibregl-ctrl-attrib { background: var(--surface) !important; color: var(--muted) !important; font-family: var(--font-geist-mono); }
 .maplibregl-ctrl-attrib a { color: var(--muted) !important; }
 .divider { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--radar); box-shadow: 0 0 12px oklch(.85 .12 195 / .6); z-index: 6; pointer-events: none; }
@@ -130,3 +134,9 @@ body::after {
   .sweep { display: none; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* change legend + polarization */
+.seg { display: inline-flex; } .seg .btn + .btn { border-left: 0; }
+.ramp { height: 8px; background: linear-gradient(90deg, #b2182b, #f7f7f7 50%, #2166ac); border: 1px solid var(--line); }
+.ramp-l { display: flex; justify-content: space-between; gap: 12px; }
+.about h3.sec { margin-top: 14px; }
