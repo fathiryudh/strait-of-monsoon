@@ -3,9 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import type { ImageSource, Map as MLMap, StyleSpecification } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { POP_TILES, maxzoom, tiles, type Scene } from "@/lib/data";
+import type { Bounds, Marker } from "@/lib/tour";
 
-type Key = "modis" | "nisar" | "fires";
-const ORDER = ["modis", "nisar", "pop", "fires", "proc", "change"];
+type Key = "modis" | "nisar";
+const ORDER = ["modis", "nisar", "pop", "proc", "water", "change"];
 const keyOf = (id: string) => id.split("-")[0];
 
 const BASE: StyleSpecification = {
@@ -26,7 +27,7 @@ const BASE: StyleSpecification = {
 const laterThan = (map: MLMap, key: string) => map.getStyle().layers.find((l) => ORDER.indexOf(keyOf(l.id)) > ORDER.indexOf(key))?.id;
 
 /** One image-source layer (our processed PNGs); updateImage swaps the PNG without flicker. */
-function setImg(map: MLMap, id: "proc" | "change", scene: Scene | null, opacity: number) {
+function setImg(map: MLMap, id: "proc" | "water" | "change", scene: Scene | null, opacity: number) {
   if (!scene) {
     if (map.getLayer(id)) map.removeLayer(id);
     if (map.getSource(id)) map.removeSource(id);
@@ -71,30 +72,48 @@ const fmt = (lat: number, lng: number) =>
 
 type Props = {
   swipe: boolean;
+  leftDate: string | null; // compare mode: radar on this date left of the line instead of the camera
   date: string;
   nextDate: string | null;
-  fires: boolean;
-  view: [number, number, number, number] | null;
+  view: Bounds | null;
   proc: Scene | null;
+  water: Scene | null;
   change: Scene | null;
   pop: boolean;
+  swipeTo: { pos: number } | null; // a new object glides the divider to pos
+  markers: Marker[];
+  onSwipe: (pos: number) => void;
   onCenter: (s: string) => void;
   onLoad: () => void;
 };
 
-export default function SwipeMap({ swipe, date, nextDate, fires, view, proc, change, pop, onCenter, onLoad }: Props) {
+export default function SwipeMap({ swipe, leftDate, date, nextDate, view, proc, water, change, pop, swipeTo, markers, onSwipe, onCenter, onLoad }: Props) {
   const optEl = useRef<HTMLDivElement>(null);
   const radEl = useRef<HTMLDivElement>(null);
   const opt = useRef<MLMap | null>(null);
   const rad = useRef<MLMap | null>(null);
-  const cb = useRef({ onCenter, onLoad });
+  const cb = useRef({ onCenter, onLoad, onSwipe });
   useEffect(() => {
-    cb.current = { onCenter, onLoad };
+    cb.current = { onCenter, onLoad, onSwipe };
   });
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [pos, setPos] = useState(50);
+  const [pos, setPos] = useState(swipeTo?.pos ?? 50);
+  const [glide, setGlide] = useState(false);
+  const [prevTo, setPrevTo] = useState(swipeTo);
+  if (swipeTo !== prevTo) {
+    setPrevTo(swipeTo);
+    if (swipeTo) {
+      setGlide(swipeTo.pos !== pos); // cleared on transitionend; no transition when the value is unchanged
+      setPos(swipeTo.pos);
+    }
+  }
   const dragging = useRef(false);
+  const [pts, setPts] = useState<{ x: number; y: number }[]>([]);
+
+  useEffect(() => {
+    cb.current.onSwipe(pos);
+  }, [pos]);
 
   useEffect(() => {
     let dead = false;
@@ -110,7 +129,7 @@ export default function SwipeMap({ swipe, date, nextDate, fires, view, proc, cha
       maps = [a, b];
       opt.current = a;
       rad.current = b;
-      b.addControl(new AttributionControl({ compact: true, customAttribution: "Imagery: NASA GIBS (NISAR, MODIS, VIIRS)" }), "top-right");
+      b.addControl(new AttributionControl({ compact: true, customAttribution: "Imagery: NASA GIBS (NISAR, MODIS)" }), "top-right");
       // compact control opens itself on wide screens and covers the radar side; start it collapsed (credits also in About)
       b.once("load", () => radEl.current?.querySelector(".maplibregl-compact-show")?.classList.remove("maplibregl-compact-show"));
       let lock = false;
@@ -149,17 +168,17 @@ export default function SwipeMap({ swipe, date, nextDate, fires, view, proc, cha
     const first = !rad.current.getStyle().layers.some((l) => keyOf(l.id) === "nisar");
     showDates(rad.current, "nisar", date, nextDate);
     if (first) rad.current.once("idle", () => cb.current.onLoad()); // loader waits for the first NISAR tiles
-    showDates(opt.current, "modis", swipe ? date : null);
-    showDates(opt.current, "fires", swipe && fires ? date : null);
-  }, [ready, date, nextDate, swipe, fires]);
+    showDates(opt.current, "modis", swipe && !leftDate ? date : null);
+    showDates(opt.current, "nisar", swipe ? leftDate : null);
+  }, [ready, date, nextDate, swipe, leftDate]);
 
   const first = useRef(true);
   useEffect(() => {
     if (!ready || !view || !rad.current) return;
     const small = window.innerWidth <= 768;
     rad.current.fitBounds([[view[0], view[1]], [view[2], view[3]]], {
-      padding: small ? { top: 100, bottom: window.innerHeight * 0.55, left: 20, right: 20 } : { top: 80, bottom: 60, left: 60, right: 60 },
-      duration: first.current ? 0 : 2200,
+      padding: small ? { top: 100, bottom: window.innerHeight * 0.55, left: 20, right: 20 } : { top: 90, bottom: 110, left: 40, right: 470 },
+      duration: first.current ? 0 : 1600, // MapLibre jumps instead under prefers-reduced-motion
       maxZoom: 12,
     });
     first.current = false;
@@ -169,8 +188,23 @@ export default function SwipeMap({ swipe, date, nextDate, fires, view, proc, cha
     const m = rad.current;
     if (!ready || !m) return;
     setImg(m, "proc", proc, 1);
+    setImg(m, "water", water, 0.7);
     setImg(m, "change", change, 0.85);
-  }, [ready, proc, change]);
+  }, [ready, proc, water, change]);
+
+  useEffect(() => {
+    const m = rad.current;
+    if (!ready || !m) return;
+    const upd = () => setPts(markers.map((k) => m.project(k.lngLat)));
+    const raf = requestAnimationFrame(upd);
+    m.on("move", upd);
+    m.on("resize", upd);
+    return () => {
+      cancelAnimationFrame(raf);
+      m.off("move", upd);
+      m.off("resize", upd);
+    };
+  }, [ready, markers]);
 
   useEffect(() => {
     const m = rad.current;
@@ -192,13 +226,13 @@ export default function SwipeMap({ swipe, date, nextDate, fires, view, proc, cha
   return (
     <div className="maps">
       <div ref={radEl} className="map" />
-      <div ref={optEl} className="map" style={{ clipPath: `inset(0 ${swipe ? 100 - pos : 100}% 0 0)` }} />
+      <div ref={optEl} className={`map ${glide ? "glide" : ""}`} style={{ clipPath: `inset(0 ${swipe ? 100 - pos : 100}% 0 0)` }} />
       {swipe && (
         <>
-          <span className="chip chip-l">Optical · MODIS Terra</span>
-          <span className="chip chip-r">Radar · NISAR L-band</span>
-          <div className="scan" style={{ left: `${pos}%` }} />
-          <div className="divider" style={{ left: `${pos}%` }}>
+          <span className="chip chip-l">{leftDate ? `Before · ${leftDate}` : "Optical · MODIS Terra"}</span>
+          <span className="chip chip-r">{leftDate ? `After · ${date}` : "Radar · NISAR L-band"}</span>
+          <div className={`scan ${glide ? "glide" : ""}`} style={{ left: `${pos}%` }} />
+          <div className={`divider ${glide ? "glide" : ""}`} style={{ left: `${pos}%` }} onTransitionEnd={() => setGlide(false)}>
             <div
               className="handle"
               role="slider"
@@ -210,6 +244,7 @@ export default function SwipeMap({ swipe, date, nextDate, fires, view, proc, cha
               aria-valuenow={Math.round(pos)}
               onPointerDown={(e) => {
                 dragging.current = true;
+                setGlide(false);
                 e.currentTarget.setPointerCapture(e.pointerId);
               }}
               onPointerMove={(e) => dragging.current && setFromX(e.clientX)}
@@ -224,6 +259,14 @@ export default function SwipeMap({ swipe, date, nextDate, fires, view, proc, cha
             </div>
           </div>
         </>
+      )}
+      {markers.map((k, i) =>
+        pts[i] ? (
+          <span key={k.label} className={`mk mk-${k.kind}`} style={{ transform: `translate(${pts[i].x}px, ${pts[i].y}px)` }}>
+            <i />
+            {k.label}
+          </span>
+        ) : null,
       )}
       {busy && <span className="chip chip-s" role="status"><i className="pulse" />receiving L-band tiles…</span>}
       <span className="reticle" aria-hidden="true" />
