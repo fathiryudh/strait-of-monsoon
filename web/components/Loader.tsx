@@ -9,7 +9,7 @@ export default function Loader({ mapReady }: { mapReady: boolean }) {
 
   useEffect(() => {
     document.fonts.ready.then(() => setFonts(true));
-    const cap = setTimeout(() => setCapped(true), 2500);
+    const cap = setTimeout(() => setCapped(true), 8000);
     return () => clearTimeout(cap);
   }, []);
 
