@@ -4,7 +4,7 @@ create table if not exists scenes (
   aoi text not null,            -- 'riau' | 'sg_reclaim'
   date date not null,           -- for kind='change': the later date
   date_from date,               -- for kind='change': the baseline date
-  kind text not null,           -- 'hv' | 'change'
+  kind text not null,           -- 'hv' | 'change' | 'hh' | 'change_hh'
   png_url text not null,        -- public Storage URL
   bounds jsonb not null,        -- [west, south, east, north] EPSG:4326
   maturity text                 -- 'PROVISIONAL' | 'VALIDATED'
@@ -12,8 +12,10 @@ create table if not exists scenes (
 create table if not exists stats (
   aoi text not null, poly_id text not null, poly_name text not null,
   date date not null, mean_hv_db real not null,
+  mean_hh_db real,
   primary key (aoi, poly_id, date)
 );
+alter table stats add column if not exists mean_hh_db real;  -- for databases created before HH was added
 
 -- RLS on, public read only; writes come from the pipeline with the secret (service) key, which bypasses RLS.
 alter table scenes enable row level security;
