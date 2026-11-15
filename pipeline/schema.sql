@@ -17,6 +17,8 @@ create table if not exists stats (
 );
 alter table stats add column if not exists mean_hh_db real;  -- for databases created before HH was added
 
+alter table stats add column if not exists water_km2 real;  -- tonle_sap open-water area (km2), nullable
+
 -- RLS on, public read only; writes come from the pipeline with the secret (service) key, which bypasses RLS.
 alter table scenes enable row level security;
 alter table stats enable row level security;
