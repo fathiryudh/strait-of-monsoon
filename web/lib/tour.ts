@@ -179,10 +179,11 @@ const LAST: Step = {
   id: "you",
   title: "Your turn",
   body: "The monsoon brings the rain that fills rivers, lakes and rice fields, and sometimes floods and landslides. NISAR sees it every 12 days, through any cloud. Next it could map floods while they happen, spot slopes about to slide, and warn people earlier.",
-  aoi: "sg_reclaim",
-  view: [101.5, 0.8, 105.5, 13.6],
-  date: "2026-07-08",
-  swipePos: 100, // whole region under monsoon cloud; NISAR tiles are empty at this zoom
+  // end on the flood peak at Tonle Sap; a region-wide view is too far out for NISAR tiles
+  aoi: "tonle_sap",
+  view: [...TONLE],
+  date: "2026-10-17",
+  swipePos: 50,
   layers: OFF,
 };
 

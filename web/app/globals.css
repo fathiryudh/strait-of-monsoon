@@ -121,8 +121,12 @@ body::after {
 .about h3 { font-family: var(--font-geist-mono); font-size: 12px; font-weight: 400; color: var(--haze); letter-spacing: .02em; margin-top: 8px; }
 .about ul { padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
 
+/* tour steps that don't need play or layer switches hide the data panel so beginners see only the story */
+.dock.touring:not(.ctl) .ctrl { display: none; }
+
 @media (max-width: 768px) {
   :root { --top: 124px; }
+  .topbar { background: linear-gradient(var(--bg), oklch(.1448 0 0 / .85) 70%, transparent); padding-bottom: 12px; }
   .dock { flex-direction: column; align-items: stretch; gap: 8px; max-height: 56vh; overflow-y: auto; pointer-events: auto; left: 0; right: 0; bottom: 0; padding: 0 16px 16px; }
   .card, .ctrl { width: 100%; }
   .ctrl { order: -1; }
