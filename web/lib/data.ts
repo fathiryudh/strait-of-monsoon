@@ -31,7 +31,8 @@ export const tiles = {
   fires: (d: string) =>
     `https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=VIIRS_NOAA20_Thermal_Anomalies_375m_All&STYLES=&SRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256&FORMAT=image/png&TRANSPARENT=TRUE&TIME=${d}`,
 };
-export const maxzoom = { nisar: 13, modis: 9, fires: 14 };
+// GIBS NISAR tiles above z9 currently come back as striped placeholders, so overzoom z9.
+export const maxzoom = { nisar: 9, modis: 9, fires: 14 };
 
 const abs = (u: string) => (/^(https?:)?\//.test(u) ? u : `/overlays/${u}`);
 

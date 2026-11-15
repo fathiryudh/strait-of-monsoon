@@ -91,6 +91,8 @@ export default function SwipeMap({ swipe, date, nextDate, fires, view, change, o
       opt.current = a;
       rad.current = b;
       b.addControl(new AttributionControl({ compact: true, customAttribution: "Imagery: NASA GIBS (NISAR, MODIS, VIIRS)" }), "top-right");
+      // compact control opens itself on wide screens and covers the radar side; start it collapsed (credits also in About)
+      b.once("load", () => radEl.current?.querySelector(".maplibregl-compact-show")?.classList.remove("maplibregl-compact-show"));
       let lock = false;
       const link = (s: MLMap, d: MLMap) =>
         s.on("move", () => {
