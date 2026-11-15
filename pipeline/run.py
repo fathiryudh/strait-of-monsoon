@@ -29,7 +29,8 @@ CACHE = ROOT / "data" / "raw"
 WEB = ROOT.parent / "web" / "public" / "overlays"
 GRID = "/science/LSAR/GCOV/grids/frequencyA"  # 10 m posting
 LOOKS = 4  # 4x4 boxcar in linear power: 10 m -> 40 m, also cuts speckle
-HV_RANGE = (-30.0, -5.0)
+RANGES = {"hv": (-30.0, -5.0), "hh": (-25.0, 0.0)}  # dB stretch per polarization
+POLS = {"hv": "HVHV", "hh": "HHHH"}
 CHANGE_MAX, CHANGE_MIN = 6.0, 3.0
 WATER_DB = -21.0  # median HV over all dates below this = open water, masked in change maps
 MIN_BLOB_PX = 50  # drop change blobs under 50 px (8 ha at 40 m): mostly ships moving between anchorage slots
@@ -189,10 +190,10 @@ def save_rgba(rgba, path):
 GRAY_LEVELS = 128  # 0.2 dB steps; speckle makes 256-level PNGs too big (>1.8 MB)
 
 
-def hv_png(lin, path):
-    """Palette PNG: index 0 transparent (nodata), 1..GRAY_LEVELS = black..white over HV_RANGE dB."""
+def gray_png(lin, path, rng):
+    """Palette PNG: index 0 transparent (nodata), 1..GRAY_LEVELS = black..white over rng dB."""
     d = db(lin)
-    v = np.nan_to_num(np.clip((d - HV_RANGE[0]) / (HV_RANGE[1] - HV_RANGE[0]), 0, 1))
+    v = np.nan_to_num(np.clip((d - rng[0]) / (rng[1] - rng[0]), 0, 1))
     q = (np.rint(v * (GRAY_LEVELS - 1)) + 1).astype(np.uint8)
     q[np.isnan(d)] = 0
     im = Image.fromarray(q, "P")
@@ -241,44 +242,48 @@ def process(aoi):
     t = time.time()
     grans = search(aoi)
     print(f"[{aoi}] {len(grans)} granules ({time.time() - t:.0f}s search)", flush=True)
-    scenes, stats, grids = [], [], {}
+    scenes, stats, grids = [], [], {"hv": {}, "hh": {}}
+    w, s, e, n = bounds
     for gr in grans:
-        npy = CACHE / aoi / f"hv_{gr['date']}.npy"
         t = time.time()
-        if npy.exists():
-            lin = np.load(npy)
-        else:
-            raw, x, y, epsg = read_clip(gr["url"], bounds)
-            lin, _, _ = to_latlon(*multilook(raw, x, y), epsg, bounds)
-            np.save(npy, lin)
-        H, W = lin.shape
-        w, s, e, n = bounds
-        lon = w + (np.arange(W) + 0.5) * (e - w) / W
-        lat = n - (np.arange(H) + 0.5) * (n - s) / H
-        grids[gr["date"]] = lin
-        png = f"{aoi}/hv_{gr['date']}.png"
-        hv_png(lin, OUT / png)
-        valid = np.isfinite(lin).mean()
-        print(f"[{aoi}] {gr['date']} {gr['maturity']} {W}x{H} valid={valid:.0%} ({time.time() - t:.0f}s) {gr['granule']}", flush=True)
-        scenes.append(dict(aoi=aoi, date=gr["date"], date_from=None, kind="hv", png_url=png, bounds=bounds,
-                           maturity=gr["maturity"], granule=gr["granule"]))
-        for pid, (pname, ring) in a["polys"].items():
-            m = poly_mean_db(lin, lon, lat, ring)
-            if m is not None:
-                stats.append(dict(aoi=aoi, poly_id=pid, poly_name=pname, date=gr["date"], mean_hv_db=round(m, 2)))
+        means = {}
+        for pol, ds_name in POLS.items():
+            npy = CACHE / aoi / f"{pol}_{gr['date']}.npy"
+            if npy.exists():
+                lin = np.load(npy)
+            else:
+                raw, x, y, epsg = read_clip(gr["url"], bounds, ds_name)
+                lin, _, _ = to_latlon(*multilook(raw, x, y), epsg, bounds)
+                np.save(npy, lin)
+            H, W = lin.shape
+            lon = w + (np.arange(W) + 0.5) * (e - w) / W
+            lat = n - (np.arange(H) + 0.5) * (n - s) / H
+            grids[pol][gr["date"]] = lin
+            png = f"{aoi}/{pol}_{gr['date']}.png"
+            gray_png(lin, OUT / png, RANGES[pol])
+            scenes.append(dict(aoi=aoi, date=gr["date"], date_from=None, kind=pol, png_url=png, bounds=bounds,
+                               maturity=gr["maturity"], granule=gr["granule"]))
+            means[pol] = {pid: poly_mean_db(lin, lon, lat, ring) for pid, (_, ring) in a["polys"].items()}
+        print(f"[{aoi}] {gr['date']} {gr['maturity']} {W}x{H} valid={np.isfinite(lin).mean():.0%} ({time.time() - t:.0f}s) {gr['granule']}", flush=True)
+        for pid, (pname, _) in a["polys"].items():
+            hv, hh = means["hv"][pid], means["hh"][pid]
+            if hv is not None:
+                stats.append(dict(aoi=aoi, poly_id=pid, poly_name=pname, date=gr["date"], mean_hv_db=round(hv, 2),
+                                  mean_hh_db=None if hh is None else round(hh, 2)))
     # change within one calibration: earliest vs latest PROVISIONAL (fall back to latest overall)
     prov = [g for g in grans if g["maturity"] == grans[0]["maturity"]]
     d0, d1 = grans[0]["date"], prov[-1]["date"]
     if d1 == d0:
         d1 = grans[-1]["date"]
-    png = f"{aoi}/change_{d0}_{d1}.png"
-    with np.errstate(all="ignore"):
-        water = db(np.nanmedian(np.stack(list(grids.values())), axis=0)) < WATER_DB
-    d = change_png(grids[d0], grids[d1], water, OUT / png)
-    with np.errstate(invalid="ignore"):
-        print(f"[{aoi}] change {d0}->{d1}: loss<-3dB {np.mean(d < -CHANGE_MIN):.1%}, gain>+3dB {np.mean(d > CHANGE_MIN):.1%}", flush=True)
-    scenes.append(dict(aoi=aoi, date=d1, date_from=d0, kind="change", png_url=png, bounds=bounds,
-                       maturity=grans[0]["maturity"], granule=None))
+    with np.errstate(all="ignore"):  # water from HV median: ships are transient, so the median stays dark water
+        water = db(np.nanmedian(np.stack(list(grids["hv"].values())), axis=0)) < WATER_DB
+    for pol, kind in (("hv", "change"), ("hh", "change_hh")):
+        png = f"{aoi}/{kind}_{d0}_{d1}.png"
+        d = change_png(grids[pol][d0], grids[pol][d1], water, OUT / png)
+        with np.errstate(invalid="ignore"):
+            print(f"[{aoi}] {kind} {d0}->{d1}: loss<-3dB {np.mean(d < -CHANGE_MIN):.1%}, gain>+3dB {np.mean(d > CHANGE_MIN):.1%}", flush=True)
+        scenes.append(dict(aoi=aoi, date=d1, date_from=d0, kind=kind, png_url=png, bounds=bounds,
+                           maturity=grans[0]["maturity"], granule=None))
     polys = [dict(aoi=aoi, poly_id=pid, poly_name=pname, ring=ring) for pid, (pname, ring) in a["polys"].items()]
     return scenes, stats, polys
 
